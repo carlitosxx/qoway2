@@ -1,4 +1,4 @@
-# prinstom
+# Proyecto Qoway version 2.0.0.
 
 A new Flutter project.
 
