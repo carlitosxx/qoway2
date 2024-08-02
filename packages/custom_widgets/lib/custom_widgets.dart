@@ -9,6 +9,7 @@ export 'src/button_v1b.widget.dart';
 export 'src/button_v2.widget.dart';
 export 'src/custom_painters/logo.cp.dart';
 export 'src/custom_painters/noconection.cp.dart';
+export 'src/custom_painters/padlock.cp.dart';
 export 'src/custom_painters/warning.cp.dart';
 export 'src/horizontal_spacer_large.widget.dart';
 export 'src/horizontal_spacer_medium.widget.dart';

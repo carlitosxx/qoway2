@@ -37,7 +37,7 @@ class TextfieldModalPopup extends StatelessWidget {
             margin: const EdgeInsets.fromLTRB(0, 0, 0, 7),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Theme.of(context).colorScheme.onBackground.withOpacity(.1),
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(.1),
             ),
             child: Container(
               height: 50,
@@ -47,7 +47,7 @@ class TextfieldModalPopup extends StatelessWidget {
                     ? Text(
                         text!,
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.onBackground,
+                          color: Theme.of(context).colorScheme.onSurface,
                           fontSize: 16,
                         ),
                       )
@@ -56,7 +56,7 @@ class TextfieldModalPopup extends StatelessWidget {
                         style: TextStyle(
                           color: Theme.of(context)
                               .colorScheme
-                              .onBackground
+                              .onSurface
                               .withOpacity(0.3),
                           fontSize: 16,
                         ),
@@ -69,8 +69,7 @@ class TextfieldModalPopup extends StatelessWidget {
             top: 12,
             child: Icon(
               icon,
-              color:
-                  Theme.of(context).colorScheme.onBackground.withOpacity(0.4),
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
             ),
           ),
         ],

@@ -27,10 +27,10 @@ const UserModelSchema = CollectionSchema(
       name: r'email',
       type: IsarType.string,
     ),
-    r'id': PropertySchema(
+    r'isSimbolLeft': PropertySchema(
       id: 2,
-      name: r'id',
-      type: IsarType.long,
+      name: r'isSimbolLeft',
+      type: IsarType.bool,
     ),
     r'name': PropertySchema(
       id: 3,
@@ -47,13 +47,8 @@ const UserModelSchema = CollectionSchema(
       name: r'shortDescriptionCurrency',
       type: IsarType.string,
     ),
-    r'sideCurrency': PropertySchema(
-      id: 6,
-      name: r'sideCurrency',
-      type: IsarType.long,
-    ),
     r'simbolCurrency': PropertySchema(
-      id: 7,
+      id: 6,
       name: r'simbolCurrency',
       type: IsarType.string,
     )
@@ -62,7 +57,7 @@ const UserModelSchema = CollectionSchema(
   serialize: _userModelSerialize,
   deserialize: _userModelDeserialize,
   deserializeProp: _userModelDeserializeProp,
-  idName: r'isarId',
+  idName: r'id',
   indexes: {},
   links: {},
   embeddedSchemas: {},
@@ -110,12 +105,11 @@ void _userModelSerialize(
 ) {
   writer.writeString(offsets[0], object.descriptionCurrency);
   writer.writeString(offsets[1], object.email);
-  writer.writeLong(offsets[2], object.id);
+  writer.writeBool(offsets[2], object.isSimbolLeft);
   writer.writeString(offsets[3], object.name);
   writer.writeString(offsets[4], object.password);
   writer.writeString(offsets[5], object.shortDescriptionCurrency);
-  writer.writeLong(offsets[6], object.sideCurrency);
-  writer.writeString(offsets[7], object.simbolCurrency);
+  writer.writeString(offsets[6], object.simbolCurrency);
 }
 
 UserModel _userModelDeserialize(
@@ -125,16 +119,15 @@ UserModel _userModelDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = UserModel(
+    descriptionCurrency: reader.readStringOrNull(offsets[0]),
     email: reader.readString(offsets[1]),
+    id: id,
+    isSimbolLeft: reader.readBoolOrNull(offsets[2]),
     name: reader.readString(offsets[3]),
     password: reader.readString(offsets[4]),
+    shortDescriptionCurrency: reader.readStringOrNull(offsets[5]),
+    simbolCurrency: reader.readStringOrNull(offsets[6]),
   );
-  object.descriptionCurrency = reader.readStringOrNull(offsets[0]);
-  object.id = reader.readLongOrNull(offsets[2]);
-  object.isarId = id;
-  object.shortDescriptionCurrency = reader.readStringOrNull(offsets[5]);
-  object.sideCurrency = reader.readLongOrNull(offsets[6]);
-  object.simbolCurrency = reader.readStringOrNull(offsets[7]);
   return object;
 }
 
@@ -150,7 +143,7 @@ P _userModelDeserializeProp<P>(
     case 1:
       return (reader.readString(offset)) as P;
     case 2:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 3:
       return (reader.readString(offset)) as P;
     case 4:
@@ -158,8 +151,6 @@ P _userModelDeserializeProp<P>(
     case 5:
       return (reader.readStringOrNull(offset)) as P;
     case 6:
-      return (reader.readLongOrNull(offset)) as P;
-    case 7:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -167,7 +158,7 @@ P _userModelDeserializeProp<P>(
 }
 
 Id _userModelGetId(UserModel object) {
-  return object.isarId;
+  return object.id ?? Isar.autoIncrement;
 }
 
 List<IsarLinkBase<dynamic>> _userModelGetLinks(UserModel object) {
@@ -175,12 +166,12 @@ List<IsarLinkBase<dynamic>> _userModelGetLinks(UserModel object) {
 }
 
 void _userModelAttach(IsarCollection<dynamic> col, Id id, UserModel object) {
-  object.isarId = id;
+  object.id = id;
 }
 
 extension UserModelQueryWhereSort
     on QueryBuilder<UserModel, UserModel, QWhere> {
-  QueryBuilder<UserModel, UserModel, QAfterWhere> anyIsarId() {
+  QueryBuilder<UserModel, UserModel, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
@@ -189,70 +180,66 @@ extension UserModelQueryWhereSort
 
 extension UserModelQueryWhere
     on QueryBuilder<UserModel, UserModel, QWhereClause> {
-  QueryBuilder<UserModel, UserModel, QAfterWhereClause> isarIdEqualTo(
-      Id isarId) {
+  QueryBuilder<UserModel, UserModel, QAfterWhereClause> idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
-        lower: isarId,
-        upper: isarId,
+        lower: id,
+        upper: id,
       ));
     });
   }
 
-  QueryBuilder<UserModel, UserModel, QAfterWhereClause> isarIdNotEqualTo(
-      Id isarId) {
+  QueryBuilder<UserModel, UserModel, QAfterWhereClause> idNotEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(
-              IdWhereClause.lessThan(upper: isarId, includeUpper: false),
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
             )
             .addWhereClause(
-              IdWhereClause.greaterThan(lower: isarId, includeLower: false),
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
             );
       } else {
         return query
             .addWhereClause(
-              IdWhereClause.greaterThan(lower: isarId, includeLower: false),
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
             )
             .addWhereClause(
-              IdWhereClause.lessThan(upper: isarId, includeUpper: false),
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
             );
       }
     });
   }
 
-  QueryBuilder<UserModel, UserModel, QAfterWhereClause> isarIdGreaterThan(
-      Id isarId,
+  QueryBuilder<UserModel, UserModel, QAfterWhereClause> idGreaterThan(Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        IdWhereClause.greaterThan(lower: isarId, includeLower: include),
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
       );
     });
   }
 
-  QueryBuilder<UserModel, UserModel, QAfterWhereClause> isarIdLessThan(
-      Id isarId,
+  QueryBuilder<UserModel, UserModel, QAfterWhereClause> idLessThan(Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        IdWhereClause.lessThan(upper: isarId, includeUpper: include),
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
       );
     });
   }
 
-  QueryBuilder<UserModel, UserModel, QAfterWhereClause> isarIdBetween(
-    Id lowerIsarId,
-    Id upperIsarId, {
+  QueryBuilder<UserModel, UserModel, QAfterWhereClause> idBetween(
+    Id lowerId,
+    Id upperId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
-        lower: lowerIsarId,
+        lower: lowerId,
         includeLower: includeLower,
-        upper: upperIsarId,
+        upper: upperId,
         includeUpper: includeUpper,
       ));
     });
@@ -562,7 +549,7 @@ extension UserModelQueryFilter
   }
 
   QueryBuilder<UserModel, UserModel, QAfterFilterCondition> idEqualTo(
-      int? value) {
+      Id? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -572,7 +559,7 @@ extension UserModelQueryFilter
   }
 
   QueryBuilder<UserModel, UserModel, QAfterFilterCondition> idGreaterThan(
-    int? value, {
+    Id? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -585,7 +572,7 @@ extension UserModelQueryFilter
   }
 
   QueryBuilder<UserModel, UserModel, QAfterFilterCondition> idLessThan(
-    int? value, {
+    Id? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -598,8 +585,8 @@ extension UserModelQueryFilter
   }
 
   QueryBuilder<UserModel, UserModel, QAfterFilterCondition> idBetween(
-    int? lower,
-    int? upper, {
+    Id? lower,
+    Id? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -614,55 +601,30 @@ extension UserModelQueryFilter
     });
   }
 
-  QueryBuilder<UserModel, UserModel, QAfterFilterCondition> isarIdEqualTo(
-      Id value) {
+  QueryBuilder<UserModel, UserModel, QAfterFilterCondition>
+      isSimbolLeftIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'isSimbolLeft',
+      ));
+    });
+  }
+
+  QueryBuilder<UserModel, UserModel, QAfterFilterCondition>
+      isSimbolLeftIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'isSimbolLeft',
+      ));
+    });
+  }
+
+  QueryBuilder<UserModel, UserModel, QAfterFilterCondition> isSimbolLeftEqualTo(
+      bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'isarId',
+        property: r'isSimbolLeft',
         value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UserModel, UserModel, QAfterFilterCondition> isarIdGreaterThan(
-    Id value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'isarId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UserModel, UserModel, QAfterFilterCondition> isarIdLessThan(
-    Id value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'isarId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UserModel, UserModel, QAfterFilterCondition> isarIdBetween(
-    Id lower,
-    Id upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'isarId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
       ));
     });
   }
@@ -1085,79 +1047,6 @@ extension UserModelQueryFilter
   }
 
   QueryBuilder<UserModel, UserModel, QAfterFilterCondition>
-      sideCurrencyIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'sideCurrency',
-      ));
-    });
-  }
-
-  QueryBuilder<UserModel, UserModel, QAfterFilterCondition>
-      sideCurrencyIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'sideCurrency',
-      ));
-    });
-  }
-
-  QueryBuilder<UserModel, UserModel, QAfterFilterCondition> sideCurrencyEqualTo(
-      int? value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'sideCurrency',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UserModel, UserModel, QAfterFilterCondition>
-      sideCurrencyGreaterThan(
-    int? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'sideCurrency',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UserModel, UserModel, QAfterFilterCondition>
-      sideCurrencyLessThan(
-    int? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'sideCurrency',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UserModel, UserModel, QAfterFilterCondition> sideCurrencyBetween(
-    int? lower,
-    int? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'sideCurrency',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<UserModel, UserModel, QAfterFilterCondition>
       simbolCurrencyIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1344,15 +1233,15 @@ extension UserModelQuerySortBy on QueryBuilder<UserModel, UserModel, QSortBy> {
     });
   }
 
-  QueryBuilder<UserModel, UserModel, QAfterSortBy> sortById() {
+  QueryBuilder<UserModel, UserModel, QAfterSortBy> sortByIsSimbolLeft() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'id', Sort.asc);
+      return query.addSortBy(r'isSimbolLeft', Sort.asc);
     });
   }
 
-  QueryBuilder<UserModel, UserModel, QAfterSortBy> sortByIdDesc() {
+  QueryBuilder<UserModel, UserModel, QAfterSortBy> sortByIsSimbolLeftDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'id', Sort.desc);
+      return query.addSortBy(r'isSimbolLeft', Sort.desc);
     });
   }
 
@@ -1391,18 +1280,6 @@ extension UserModelQuerySortBy on QueryBuilder<UserModel, UserModel, QSortBy> {
       sortByShortDescriptionCurrencyDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'shortDescriptionCurrency', Sort.desc);
-    });
-  }
-
-  QueryBuilder<UserModel, UserModel, QAfterSortBy> sortBySideCurrency() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'sideCurrency', Sort.asc);
-    });
-  }
-
-  QueryBuilder<UserModel, UserModel, QAfterSortBy> sortBySideCurrencyDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'sideCurrency', Sort.desc);
     });
   }
 
@@ -1458,15 +1335,15 @@ extension UserModelQuerySortThenBy
     });
   }
 
-  QueryBuilder<UserModel, UserModel, QAfterSortBy> thenByIsarId() {
+  QueryBuilder<UserModel, UserModel, QAfterSortBy> thenByIsSimbolLeft() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'isarId', Sort.asc);
+      return query.addSortBy(r'isSimbolLeft', Sort.asc);
     });
   }
 
-  QueryBuilder<UserModel, UserModel, QAfterSortBy> thenByIsarIdDesc() {
+  QueryBuilder<UserModel, UserModel, QAfterSortBy> thenByIsSimbolLeftDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'isarId', Sort.desc);
+      return query.addSortBy(r'isSimbolLeft', Sort.desc);
     });
   }
 
@@ -1508,18 +1385,6 @@ extension UserModelQuerySortThenBy
     });
   }
 
-  QueryBuilder<UserModel, UserModel, QAfterSortBy> thenBySideCurrency() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'sideCurrency', Sort.asc);
-    });
-  }
-
-  QueryBuilder<UserModel, UserModel, QAfterSortBy> thenBySideCurrencyDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'sideCurrency', Sort.desc);
-    });
-  }
-
   QueryBuilder<UserModel, UserModel, QAfterSortBy> thenBySimbolCurrency() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'simbolCurrency', Sort.asc);
@@ -1550,9 +1415,9 @@ extension UserModelQueryWhereDistinct
     });
   }
 
-  QueryBuilder<UserModel, UserModel, QDistinct> distinctById() {
+  QueryBuilder<UserModel, UserModel, QDistinct> distinctByIsSimbolLeft() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'id');
+      return query.addDistinctBy(r'isSimbolLeft');
     });
   }
 
@@ -1578,12 +1443,6 @@ extension UserModelQueryWhereDistinct
     });
   }
 
-  QueryBuilder<UserModel, UserModel, QDistinct> distinctBySideCurrency() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'sideCurrency');
-    });
-  }
-
   QueryBuilder<UserModel, UserModel, QDistinct> distinctBySimbolCurrency(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1595,9 +1454,9 @@ extension UserModelQueryWhereDistinct
 
 extension UserModelQueryProperty
     on QueryBuilder<UserModel, UserModel, QQueryProperty> {
-  QueryBuilder<UserModel, int, QQueryOperations> isarIdProperty() {
+  QueryBuilder<UserModel, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'isarId');
+      return query.addPropertyName(r'id');
     });
   }
 
@@ -1614,9 +1473,9 @@ extension UserModelQueryProperty
     });
   }
 
-  QueryBuilder<UserModel, int?, QQueryOperations> idProperty() {
+  QueryBuilder<UserModel, bool?, QQueryOperations> isSimbolLeftProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'id');
+      return query.addPropertyName(r'isSimbolLeft');
     });
   }
 
@@ -1636,12 +1495,6 @@ extension UserModelQueryProperty
       shortDescriptionCurrencyProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'shortDescriptionCurrency');
-    });
-  }
-
-  QueryBuilder<UserModel, int?, QQueryOperations> sideCurrencyProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'sideCurrency');
     });
   }
 

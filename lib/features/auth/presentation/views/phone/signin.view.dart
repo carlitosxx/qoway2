@@ -28,7 +28,6 @@ class LoginPhoneViewState extends ConsumerState<SignInPhoneView> {
   @override
   Widget build(BuildContext context) {
     final stateButtonSignin = ref.watch(signinEmailPasswordNotifierProvider);
-    print(stateButtonSignin);
     ref.listen(
       signinEmailPasswordNotifierProvider.select((value) => value),
       (previous, next) {
@@ -37,8 +36,8 @@ class LoginPhoneViewState extends ConsumerState<SignInPhoneView> {
             customModal(context, message, kClose.i18n);
           },
           data: (user) {
-            // ref.read(appRouterProvider).pushNamed('');
-            print(user!.name);
+            ref.read(appRouterProvider).pushNamed('home');
+            // print(user!.name);
           },
         );
       },
@@ -74,13 +73,20 @@ class LoginPhoneViewState extends ConsumerState<SignInPhoneView> {
                           padding: const EdgeInsets.only(
                             bottom: kToolbarHeight / 2,
                           ),
-                          child: CustomPaint(
-                            size: const Size(160, 160),
-                            painter: LogoCP(
-                              hasBackground: true,
-                              backgroundColor: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer,
+                          child: CircleAvatar(
+                            backgroundColor: Theme.of(context)
+                                .colorScheme
+                                .primaryContainer
+                                .withOpacity(0.8),
+                            radius: MediaQuery.of(context).size.width / 4.5,
+                            child: CustomPaint(
+                              size: const Size(160, 160),
+                              painter: LogoCP(
+                                hasBackground: false,
+                                backgroundColor: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer,
+                              ),
                             ),
                           ),
                         ),
@@ -103,21 +109,21 @@ class LoginPhoneViewState extends ConsumerState<SignInPhoneView> {
                           hint: kEnterYourPassword.i18n,
                           controller: passwordController),
                       const VerticalSpacerMedium(),
-                      // Olvidaste tu contraseña?
-                      GestureDetector(
-                        onTap: () {
-                          ref
-                              .read(appRouterProvider)
-                              .pushNamed('forgot_password');
-                        },
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: TextB1(
-                            text: kForgotPassword.i18n,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      )
+                      //* Olvidaste tu contraseña?
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     ref
+                      //         .read(appRouterProvider)
+                      //         .pushNamed('forgot_password');
+                      //   },
+                      //   child: Align(
+                      //     alignment: Alignment.centerRight,
+                      //     child: TextB1(
+                      //       text: kForgotPassword.i18n,
+                      //       fontWeight: FontWeight.bold,
+                      //     ),
+                      //   ),
+                      // )
                     ],
                   ),
                 ),
@@ -159,7 +165,7 @@ class LoginPhoneViewState extends ConsumerState<SignInPhoneView> {
                 width: double.infinity,
                 child: ButtonV1B(
                   onPressed: () {
-                    ref.read(appRouterProvider).pushNamed('register');
+                    ref.read(appRouterProvider).pushNamed('signup');
                   },
                   text: kNotHaveAccount.i18n,
                 ),

@@ -6,7 +6,7 @@ class User {
   String? descriptionCurrency;
   String? shortDescriptionCurrency;
   String? simbolCurrency;
-  int? sideCurrency;
+  bool? isSimbolLeft;
 
   User({
     this.id,
@@ -16,7 +16,7 @@ class User {
     this.descriptionCurrency,
     this.shortDescriptionCurrency,
     this.simbolCurrency,
-    this.sideCurrency,
+    this.isSimbolLeft,
   });
 
   // // METODOS

@@ -32,7 +32,7 @@ class _TextfieldPasswordState extends State<TextfieldPassword> {
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Theme.of(context).colorScheme.onBackground.withOpacity(.1),
+            color: Theme.of(context).colorScheme.onSurface.withOpacity(.1),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 50),
           child: TextField(
@@ -44,7 +44,7 @@ class _TextfieldPasswordState extends State<TextfieldPassword> {
             textAlign: TextAlign.center,
             keyboardType: TextInputType.visiblePassword,
             style: TextStyle(
-              color: Theme.of(context).colorScheme.onBackground,
+              color: Theme.of(context).colorScheme.onSurface,
               fontSize: 16,
             ),
             decoration: InputDecoration(
@@ -52,8 +52,7 @@ class _TextfieldPasswordState extends State<TextfieldPassword> {
               border: InputBorder.none,
               hintText: widget.hint,
               hintStyle: TextStyle(
-                color:
-                    Theme.of(context).colorScheme.onBackground.withOpacity(0.3),
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
               ),
             ),
           ),
@@ -63,7 +62,7 @@ class _TextfieldPasswordState extends State<TextfieldPassword> {
           top: 12,
           child: Icon(
             Icons.lock_rounded,
-            color: Theme.of(context).colorScheme.onBackground.withOpacity(0.4),
+            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
           ),
         ),
         Positioned(
@@ -77,8 +76,7 @@ class _TextfieldPasswordState extends State<TextfieldPassword> {
             },
             child: Icon(
               isOpen ? Icons.visibility_off : Icons.visibility,
-              color:
-                  Theme.of(context).colorScheme.onBackground.withOpacity(0.4),
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
             ),
           ),
         ),

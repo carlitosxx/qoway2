@@ -50,6 +50,12 @@ const kCreateAnAccount = 'kCreateAnAccount';
 const kMessageEmptyFields = 'kMessageEmptyFields';
 
 /// ===Create_Account===
+/// Constante: Titulo de registro
+const kTitleSignup = 'kTitleSignup';
+
+/// Constante: Mensaje de registro
+const kMessageSignUp = 'kMessageSignUp';
+
 /// Constante: hint contraseña
 const kPassword = 'kPassword';
 
@@ -58,6 +64,17 @@ const kEmail = 'kEmail';
 
 /// Constante: mensaje de error al dejar espacios vacios
 const kMessageErrorCreateAccount = 'kMessageErrorCreateAccount';
+
+/// Constante:  hit para el dropdown de moneda
+const kHintDropDownCurrency = 'kHintDropDownCurrency';
+
+/// Constante: hit para nombre completo
+const kHintFullName = 'kHintFullName';
+
+/// Constante: Titulo Lista de divisas
+const kTitleListCurrency = 'kTitleListCurrency';
+
+/// Constante: Register
 
 /// ===Validate_otp_phone===
 /// Constante: titulo de appbar
@@ -203,6 +220,14 @@ extension AuthStrings on String {
     },
 
     /// Create_Account
+    kTitleSignup: {
+      'en_us': 'Sign Up',
+      'es_es': 'Nuevo registro',
+    },
+    kMessageSignUp: {
+      'en_us': 'Register your information to create a new account.',
+      'es_es': 'Registro sus datos para crear una nueva cuenta',
+    },
     kEmail: {
       'en_us': 'Email',
       'es_es': 'Correo electronico',
@@ -214,6 +239,18 @@ extension AuthStrings on String {
     kPassword: {
       'en_us': 'Password',
       'es_es': 'Contraseña',
+    },
+    kHintDropDownCurrency: {
+      'en_us': 'Select your currency',
+      'es_es': 'Seleccione su divisa',
+    },
+    kHintFullName: {
+      'en_us': 'Enter your full name',
+      'es_es': 'Ingrese su nombre completo',
+    },
+    kTitleListCurrency: {
+      'en_us': 'List currency',
+      'es_es': 'Lista de divisas',
     },
 
     /// Validate_otp_phone

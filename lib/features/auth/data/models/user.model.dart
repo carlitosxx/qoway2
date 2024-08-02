@@ -8,14 +8,18 @@ part 'user.model.g.dart';
 @Collection()
 class UserModel implements User {
   UserModel({
+    this.id,
     required this.email,
     required this.name,
     required this.password,
+    this.shortDescriptionCurrency,
+    this.descriptionCurrency,
+    this.isSimbolLeft,
+    this.simbolCurrency,
   });
 
-  Id isarId = Isar.autoIncrement; // ID específico para Isar
   @override
-  int? id;
+  Id? id = Isar.autoIncrement;
 
   @override
   String email;
@@ -33,8 +37,33 @@ class UserModel implements User {
   String? descriptionCurrency;
 
   @override
-  int? sideCurrency;
+  bool? isSimbolLeft;
 
   @override
   String? simbolCurrency;
+
+  User toUser(UserModel usermodel) {
+    return User(
+      id: usermodel.id,
+      email: usermodel.email,
+      name: usermodel.name,
+      password: usermodel.password,
+      shortDescriptionCurrency: usermodel.shortDescriptionCurrency,
+      descriptionCurrency: usermodel.descriptionCurrency,
+      isSimbolLeft: usermodel.isSimbolLeft,
+      simbolCurrency: usermodel.simbolCurrency,
+    );
+  }
+
+  factory UserModel.fromUser(User user) {
+    return UserModel(
+      email: user.email,
+      name: user.name,
+      password: user.password,
+      shortDescriptionCurrency: user.shortDescriptionCurrency,
+      descriptionCurrency: user.descriptionCurrency,
+      isSimbolLeft: user.isSimbolLeft,
+      simbolCurrency: user.simbolCurrency,
+    );
+  }
 }

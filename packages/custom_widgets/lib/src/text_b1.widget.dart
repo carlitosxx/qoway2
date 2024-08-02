@@ -28,6 +28,7 @@ class TextB1 extends StatelessWidget {
           color:
               color ?? Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
           fontWeight: fontWeight,
+
           // fontSize: 16,
         );
     return Text(
