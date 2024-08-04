@@ -2,8 +2,7 @@ import '../../../../utils/either.util.dart';
 import '../../../../utils/errors/http_request.error.dart';
 import '../entities/user.entity.dart';
 
-typedef FailureOrSigninEmailPassword
-    = Future<Either<HttpRequestFailure, User?>>;
+typedef FailureOrSigninEmailPassword = Future<Either<HttpRequestFailure, User>>;
 typedef FailureOrSignup = Future<Either<HttpRequestFailure, User>>;
 // typedef FailureOrLogout = Future<Either<HttpRequestFailure, void>>;
 // typedef FailureOrRegister = Future<Either<HttpRequestFailure, User?>>;

@@ -60,11 +60,12 @@ class SignUpPhoneViewState extends ConsumerState<SignUpPhoneView> {
         primaryFocus?.unfocus();
       },
       child: Scaffold(
+        appBar: AppBar(),
         body: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(24, kToolbarHeight, 24, 24),
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
                 child: Column(
                   children: [
                     const VerticalSpacerSmall(),
@@ -155,15 +156,15 @@ class SignUpPhoneViewState extends ConsumerState<SignUpPhoneView> {
                         .read(signupEmailPasswordNotifierProvider.notifier)
                         .signup(
                           User(
-                            name: nameController.text,
-                            email: emailController.text,
-                            password: passwordController.text,
-                            descriptionCurrency: currencySelected.description,
-                            shortDescriptionCurrency:
-                                currencySelected.shortDescription,
-                            isSimbolLeft: currencySelected.isSimbolLeft,
-                            simbolCurrency: currencySelected.simbol,
-                          ),
+                              name: nameController.text,
+                              email: emailController.text,
+                              password: passwordController.text,
+                              descriptionCurrency: currencySelected.description,
+                              shortDescriptionCurrency:
+                                  currencySelected.shortDescription,
+                              isSimbolLeft: currencySelected.isSimbolLeft,
+                              simbolCurrency: currencySelected.simbol,
+                              accounts: []),
                         );
                   }),
             ),

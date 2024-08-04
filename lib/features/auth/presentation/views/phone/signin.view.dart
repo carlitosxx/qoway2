@@ -2,6 +2,7 @@ import 'package:custom_widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prinstom/features/auth/presentation/providers/injects_container.provider.dart';
+import 'package:prinstom/features/home/presentation/providers/injects_container.provider.dart';
 
 import '../../../../../config/router/list_routes.dart';
 import '../../../../../utils/error_mapping.util.dart';
@@ -36,6 +37,9 @@ class LoginPhoneViewState extends ConsumerState<SignInPhoneView> {
             customModal(context, message, kClose.i18n);
           },
           data: (user) {
+            ref
+                .read(loadFirstAccountByUserIdNotifierProvider.notifier)
+                .loadFirstAccountByUserId(user.id!);
             ref.read(appRouterProvider).pushNamed('home');
             // print(user!.name);
           },

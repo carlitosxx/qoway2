@@ -24,35 +24,39 @@ class TextfieldName extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Theme.of(context).colorScheme.onBackground.withOpacity(.1),
+        TextField(
+          onChanged: onChanged,
+          controller: controller,
+          maxLength: 35,
+          textAlign: TextAlign.center,
+          keyboardType: TextInputType.name,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSurface,
+            fontSize: 16,
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 50),
-          child: TextField(
-            onChanged: onChanged,
-            controller: controller,
-            maxLength: 35,
-            textAlign: TextAlign.center,
-            keyboardType: TextInputType.name,
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.onBackground,
-              fontSize: 16,
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(
+              RegExp(r'[a-zA-Z\sáéíóúÁÉÍÓÚ]'),
             ),
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(
-                RegExp(r'[a-zA-Z\sáéíóúÁÉÍÓÚ]'),
-              ),
-            ],
-            decoration: InputDecoration(
-              counterText: '',
-              border: InputBorder.none,
-              hintText: hint,
-              hintStyle: TextStyle(
-                color:
-                    Theme.of(context).colorScheme.onBackground.withOpacity(0.3),
-              ),
+          ],
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 50),
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.transparent),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide:
+                  BorderSide(color: Theme.of(context).colorScheme.primary),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            fillColor: Theme.of(context).colorScheme.onSurface.withOpacity(.1),
+            filled: true,
+            counterText: '',
+            border: InputBorder.none,
+            hintText: hint,
+            hintStyle: TextStyle(
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
             ),
           ),
         ),
@@ -61,7 +65,7 @@ class TextfieldName extends StatelessWidget {
           top: 12,
           child: Icon(
             Icons.person,
-            color: Theme.of(context).colorScheme.onBackground.withOpacity(0.4),
+            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
           ),
         ),
       ],

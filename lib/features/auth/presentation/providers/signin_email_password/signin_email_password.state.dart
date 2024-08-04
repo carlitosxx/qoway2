@@ -6,7 +6,7 @@ part 'signin_email_password.state.freezed.dart';
 @freezed
 abstract class SigninEmailPasswordState with _$SigninEmailPasswordState {
   /// Data is present state
-  const factory SigninEmailPasswordState.data({User? user}) = _Data;
+  const factory SigninEmailPasswordState.data({required User user}) = _Data;
 
   /// Initial/default state
   const factory SigninEmailPasswordState.initial() = _Initial;

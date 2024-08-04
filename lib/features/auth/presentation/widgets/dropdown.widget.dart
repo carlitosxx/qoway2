@@ -23,6 +23,14 @@ class _DropDownState extends State<DropDown> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        Positioned(
+          right: 16,
+          top: 12,
+          child: Icon(
+            Icons.keyboard_arrow_down,
+            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
+          ),
+        ),
         GestureDetector(
           onTap: widget.onTap,
           child: Container(
@@ -59,14 +67,6 @@ class _DropDownState extends State<DropDown> {
           top: 12,
           child: Icon(
             Icons.paid,
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
-          ),
-        ),
-        Positioned(
-          right: 16,
-          top: 12,
-          child: Icon(
-            Icons.keyboard_arrow_down,
             color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
           ),
         ),

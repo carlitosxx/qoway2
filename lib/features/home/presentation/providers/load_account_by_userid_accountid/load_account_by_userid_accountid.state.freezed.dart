@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'signin_email_password.state.dart';
+part of 'load_account_by_userid_accountid.state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,10 +15,10 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$SigninEmailPasswordState {
+mixin _$LoadAccountByUserIdAndAccountIdState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(User user) data,
+    required TResult Function(Account account) data,
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(ErrorMapping error) error,
@@ -26,7 +26,7 @@ mixin _$SigninEmailPasswordState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(User user)? data,
+    TResult? Function(Account account)? data,
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(ErrorMapping error)? error,
@@ -34,7 +34,7 @@ mixin _$SigninEmailPasswordState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(User user)? data,
+    TResult Function(Account account)? data,
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(ErrorMapping error)? error,
@@ -69,17 +69,19 @@ mixin _$SigninEmailPasswordState {
 }
 
 /// @nodoc
-abstract class $SigninEmailPasswordStateCopyWith<$Res> {
-  factory $SigninEmailPasswordStateCopyWith(SigninEmailPasswordState value,
-          $Res Function(SigninEmailPasswordState) then) =
-      _$SigninEmailPasswordStateCopyWithImpl<$Res, SigninEmailPasswordState>;
+abstract class $LoadAccountByUserIdAndAccountIdStateCopyWith<$Res> {
+  factory $LoadAccountByUserIdAndAccountIdStateCopyWith(
+          LoadAccountByUserIdAndAccountIdState value,
+          $Res Function(LoadAccountByUserIdAndAccountIdState) then) =
+      _$LoadAccountByUserIdAndAccountIdStateCopyWithImpl<$Res,
+          LoadAccountByUserIdAndAccountIdState>;
 }
 
 /// @nodoc
-class _$SigninEmailPasswordStateCopyWithImpl<$Res,
-        $Val extends SigninEmailPasswordState>
-    implements $SigninEmailPasswordStateCopyWith<$Res> {
-  _$SigninEmailPasswordStateCopyWithImpl(this._value, this._then);
+class _$LoadAccountByUserIdAndAccountIdStateCopyWithImpl<$Res,
+        $Val extends LoadAccountByUserIdAndAccountIdState>
+    implements $LoadAccountByUserIdAndAccountIdStateCopyWith<$Res> {
+  _$LoadAccountByUserIdAndAccountIdStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -93,12 +95,12 @@ abstract class _$$DataImplCopyWith<$Res> {
           _$DataImpl value, $Res Function(_$DataImpl) then) =
       __$$DataImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({User user});
+  $Res call({Account account});
 }
 
 /// @nodoc
 class __$$DataImplCopyWithImpl<$Res>
-    extends _$SigninEmailPasswordStateCopyWithImpl<$Res, _$DataImpl>
+    extends _$LoadAccountByUserIdAndAccountIdStateCopyWithImpl<$Res, _$DataImpl>
     implements _$$DataImplCopyWith<$Res> {
   __$$DataImplCopyWithImpl(_$DataImpl _value, $Res Function(_$DataImpl) _then)
       : super(_value, _then);
@@ -106,13 +108,13 @@ class __$$DataImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = null,
+    Object? account = null,
   }) {
     return _then(_$DataImpl(
-      user: null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User,
+      account: null == account
+          ? _value.account
+          : account // ignore: cast_nullable_to_non_nullable
+              as Account,
     ));
   }
 }
@@ -120,14 +122,14 @@ class __$$DataImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$DataImpl implements _Data {
-  const _$DataImpl({required this.user});
+  const _$DataImpl({required this.account});
 
   @override
-  final User user;
+  final Account account;
 
   @override
   String toString() {
-    return 'SigninEmailPasswordState.data(user: $user)';
+    return 'LoadAccountByUserIdAndAccountIdState.data(account: $account)';
   }
 
   @override
@@ -135,11 +137,11 @@ class _$DataImpl implements _Data {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DataImpl &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.account, account) || other.account == account));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user);
+  int get hashCode => Object.hash(runtimeType, account);
 
   @JsonKey(ignore: true)
   @override
@@ -150,36 +152,36 @@ class _$DataImpl implements _Data {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(User user) data,
+    required TResult Function(Account account) data,
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(ErrorMapping error) error,
   }) {
-    return data(user);
+    return data(account);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(User user)? data,
+    TResult? Function(Account account)? data,
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(ErrorMapping error)? error,
   }) {
-    return data?.call(user);
+    return data?.call(account);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(User user)? data,
+    TResult Function(Account account)? data,
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(ErrorMapping error)? error,
     required TResult orElse(),
   }) {
     if (data != null) {
-      return data(user);
+      return data(account);
     }
     return orElse();
   }
@@ -222,10 +224,10 @@ class _$DataImpl implements _Data {
   }
 }
 
-abstract class _Data implements SigninEmailPasswordState {
-  const factory _Data({required final User user}) = _$DataImpl;
+abstract class _Data implements LoadAccountByUserIdAndAccountIdState {
+  const factory _Data({required final Account account}) = _$DataImpl;
 
-  User get user;
+  Account get account;
   @JsonKey(ignore: true)
   _$$DataImplCopyWith<_$DataImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -240,8 +242,8 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$SigninEmailPasswordStateCopyWithImpl<$Res, _$InitialImpl>
-    implements _$$InitialImplCopyWith<$Res> {
+    extends _$LoadAccountByUserIdAndAccountIdStateCopyWithImpl<$Res,
+        _$InitialImpl> implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
@@ -254,7 +256,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'SigninEmailPasswordState.initial()';
+    return 'LoadAccountByUserIdAndAccountIdState.initial()';
   }
 
   @override
@@ -269,7 +271,7 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(User user) data,
+    required TResult Function(Account account) data,
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(ErrorMapping error) error,
@@ -280,7 +282,7 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(User user)? data,
+    TResult? Function(Account account)? data,
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(ErrorMapping error)? error,
@@ -291,7 +293,7 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(User user)? data,
+    TResult Function(Account account)? data,
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(ErrorMapping error)? error,
@@ -341,7 +343,7 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements SigninEmailPasswordState {
+abstract class _Initial implements LoadAccountByUserIdAndAccountIdState {
   const factory _Initial() = _$InitialImpl;
 }
 
@@ -354,8 +356,8 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$SigninEmailPasswordStateCopyWithImpl<$Res, _$LoadingImpl>
-    implements _$$LoadingImplCopyWith<$Res> {
+    extends _$LoadAccountByUserIdAndAccountIdStateCopyWithImpl<$Res,
+        _$LoadingImpl> implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
       : super(_value, _then);
@@ -368,7 +370,7 @@ class _$LoadingImpl implements _Loading {
 
   @override
   String toString() {
-    return 'SigninEmailPasswordState.loading()';
+    return 'LoadAccountByUserIdAndAccountIdState.loading()';
   }
 
   @override
@@ -383,7 +385,7 @@ class _$LoadingImpl implements _Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(User user) data,
+    required TResult Function(Account account) data,
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(ErrorMapping error) error,
@@ -394,7 +396,7 @@ class _$LoadingImpl implements _Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(User user)? data,
+    TResult? Function(Account account)? data,
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(ErrorMapping error)? error,
@@ -405,7 +407,7 @@ class _$LoadingImpl implements _Loading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(User user)? data,
+    TResult Function(Account account)? data,
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(ErrorMapping error)? error,
@@ -455,7 +457,7 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements SigninEmailPasswordState {
+abstract class _Loading implements LoadAccountByUserIdAndAccountIdState {
   const factory _Loading() = _$LoadingImpl;
 }
 
@@ -470,8 +472,8 @@ abstract class _$$ErrorImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$SigninEmailPasswordStateCopyWithImpl<$Res, _$ErrorImpl>
-    implements _$$ErrorImplCopyWith<$Res> {
+    extends _$LoadAccountByUserIdAndAccountIdStateCopyWithImpl<$Res,
+        _$ErrorImpl> implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
       _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
       : super(_value, _then);
@@ -500,7 +502,7 @@ class _$ErrorImpl implements _Error {
 
   @override
   String toString() {
-    return 'SigninEmailPasswordState.error(error: $error)';
+    return 'LoadAccountByUserIdAndAccountIdState.error(error: $error)';
   }
 
   @override
@@ -523,7 +525,7 @@ class _$ErrorImpl implements _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(User user) data,
+    required TResult Function(Account account) data,
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(ErrorMapping error) error,
@@ -534,7 +536,7 @@ class _$ErrorImpl implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(User user)? data,
+    TResult? Function(Account account)? data,
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(ErrorMapping error)? error,
@@ -545,7 +547,7 @@ class _$ErrorImpl implements _Error {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(User user)? data,
+    TResult Function(Account account)? data,
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(ErrorMapping error)? error,
@@ -595,7 +597,7 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements SigninEmailPasswordState {
+abstract class _Error implements LoadAccountByUserIdAndAccountIdState {
   const factory _Error(final ErrorMapping error) = _$ErrorImpl;
 
   ErrorMapping get error;

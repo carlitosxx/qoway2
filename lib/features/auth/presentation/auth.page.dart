@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'views/phone/signin.view.dart';
 
-import '../../home/home.page.dart';
+import '../../home/presentation/home.page.dart';
 import 'views/phone/splash.view.dart';
 
 /// Pagina de autenticacion

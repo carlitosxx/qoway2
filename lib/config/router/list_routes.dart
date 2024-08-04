@@ -5,7 +5,7 @@ import 'package:i18n_extension/i18n_extension.dart';
 import '../../features/auth/presentation/auth.page.dart';
 import '../../features/auth/presentation/views/phone/list_currency.view.dart';
 import '../../features/auth/presentation/views/phone/signup.view.dart';
-import '../../features/home/home.page.dart';
+import '../../features/home/presentation/home.page.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(

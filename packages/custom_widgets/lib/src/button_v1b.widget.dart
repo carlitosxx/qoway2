@@ -19,6 +19,7 @@ class ButtonV1B extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
+        overlayColor: Colors.transparent,
         padding: const EdgeInsets.symmetric(vertical: 15),
         elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.surface,
@@ -29,6 +30,7 @@ class ButtonV1B extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
+          decoration: TextDecoration.underline,
           color: onPressed != null
               ? Theme.of(context).colorScheme.onPrimaryContainer
               : Theme.of(context)
