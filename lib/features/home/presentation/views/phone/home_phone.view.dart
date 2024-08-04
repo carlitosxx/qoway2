@@ -16,12 +16,18 @@ class HomePhoneViewState extends ConsumerState<HomePhoneView> {
   @override
   Widget build(BuildContext context) {
     final stateAccount = ref.watch(loadFirstAccountByUserIdNotifierProvider);
+    final stateAccountRefresh =
+        ref.watch(loadAccountByUserIdAndAccountIdNotifierProvider);
     return Scaffold(
       appBar: AppBar(
           automaticallyImplyLeading: false,
           title: stateAccount.maybeWhen(
             orElse: () => const Text('0'),
-            data: (account) => TextB1(text: account.description),
+            data: (account) => stateAccountRefresh.maybeWhen(
+              orElse: () => TextB1(text: account.description),
+              loading: () => const CircularProgressIndicator(),
+              data: (account) => Text(account.description),
+            ),
             loading: () => const CircularProgressIndicator(),
           )
           // Text('asdasd'),
