@@ -2,10 +2,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:i18n_extension/i18n_extension.dart';
+
 import '../../features/auth/presentation/auth.page.dart';
 import '../../features/auth/presentation/views/phone/list_currency.view.dart';
 import '../../features/auth/presentation/views/phone/signup.view.dart';
 import '../../features/home/presentation/home.page.dart';
+import '../../features/home/presentation/views/phone/list_accounts.view.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -81,28 +83,29 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           ),
         ),
       ),
-      // GoRoute(
-      //   path: '/create_account_tablet',
-      //   name: 'create_account_tablet',
-      //   pageBuilder: (context, state) => CustomTransitionPage(
-      //     reverseTransitionDuration: const Duration(milliseconds: 400),
-      //     transitionDuration: const Duration(milliseconds: 400),
-      //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      // const begin = Offset(1, 0);
-      // const end = Offset.zero;
-      // const curve = Curves.easeInOut;
-      // final tween =
-      //     Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-      //       return SlideTransition(
-      //         position: animation.drive(tween),
-      //         child: child,
-      //       );
-      //     },
-      //     child: I18n(
-      //       child: const CreateAccountTabletView(),
-      //     ),
-      //   ),
-      // ),
+
+      GoRoute(
+        path: '/list_accounts',
+        name: 'list_accounts',
+        pageBuilder: (context, state) => CustomTransitionPage(
+          reverseTransitionDuration: const Duration(milliseconds: 400),
+          transitionDuration: const Duration(milliseconds: 400),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = Offset(1, 0);
+            const end = Offset.zero;
+            const curve = Curves.easeInOut;
+            final tween =
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            return SlideTransition(
+              position: animation.drive(tween),
+              child: child,
+            );
+          },
+          child: I18n(
+            child: const ListAccountsPhoneView(),
+          ),
+        ),
+      ),
       // GoRoute(
       //   path: '/validate_otp_phone',
       //   name: 'validate_otp_phone',

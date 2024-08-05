@@ -8,6 +8,7 @@ import '../../../../../config/router/list_routes.dart';
 import '../../../../../utils/error_mapping.util.dart';
 import '../../../../../utils/modals/custom_modal.widget.dart';
 import '../../auth.i18n.dart';
+import '../../providers/user_active.provider.dart';
 
 class SignInPhoneView extends ConsumerStatefulWidget {
   const SignInPhoneView({super.key});
@@ -37,6 +38,7 @@ class LoginPhoneViewState extends ConsumerState<SignInPhoneView> {
             customModal(context, message, kClose.i18n);
           },
           data: (user) {
+            ref.read(userActiveProvider.notifier).state = user;
             ref
                 .read(loadFirstAccountByUserIdNotifierProvider.notifier)
                 .loadFirstAccountByUserId(user.id!);

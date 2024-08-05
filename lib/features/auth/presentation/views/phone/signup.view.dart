@@ -6,9 +6,11 @@ import 'package:prinstom/features/auth/domain/entities/user.entity.dart';
 import '../../../../../config/router/list_routes.dart';
 import '../../../../../utils/error_mapping.util.dart';
 import '../../../../../utils/modals/custom_modal.widget.dart';
+import '../../../../home/presentation/providers/injects_container.provider.dart';
 import '../../auth.i18n.dart';
 import '../../providers/currency_selected.provider.dart';
 import '../../providers/injects_container.provider.dart';
+import '../../providers/user_active.provider.dart';
 import '../../widgets/dropdown.widget.dart';
 
 class SignUpPhoneView extends ConsumerStatefulWidget {
@@ -44,6 +46,10 @@ class SignUpPhoneViewState extends ConsumerState<SignUpPhoneView> {
             customModal(context, message, kClose.i18n);
           },
           data: (user) {
+            ref.read(userActiveProvider.notifier).state = user;
+            ref
+                .read(loadFirstAccountByUserIdNotifierProvider.notifier)
+                .loadFirstAccountByUserId(user.id!);
             ref.read(appRouterProvider).pushNamed('home');
           },
         );

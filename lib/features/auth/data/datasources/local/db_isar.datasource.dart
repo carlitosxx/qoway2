@@ -1,12 +1,11 @@
 import 'package:isar/isar.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:prinstom/features/auth/data/models/user.model.dart';
 import 'package:prinstom/features/auth/domain/entities/account.entity.dart';
-import 'package:prinstom/utils/either.util.dart';
-import 'package:prinstom/utils/errors/http_request.error.dart';
-import 'package:prinstom/utils/errors/models/bad_request.model.dart';
 
 import '../../../../../config/isar/isar_singleton.dart';
+import '../../../../../utils/either.util.dart';
+import '../../../../../utils/errors/http_request.error.dart';
+import '../../../../../utils/errors/models/bad_request.model.dart';
 import '../../../domain/entities/user.entity.dart';
 import '../../../domain/repositories/auth.repository.dart';
 

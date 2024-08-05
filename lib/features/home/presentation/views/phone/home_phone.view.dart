@@ -1,8 +1,11 @@
 import 'package:custom_widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prinstom/features/home/presentation/providers/injects_container.provider.dart';
+import 'package:prinstom/features/home/presentation/widgets/my_appbar.widget.dart';
 
+import '../../widgets/my_drawer.widget.dart';
 import '../../widgets/my_navigation_bar.widget.dart';
 
 class HomePhoneView extends ConsumerStatefulWidget {
@@ -15,23 +18,19 @@ class HomePhoneView extends ConsumerStatefulWidget {
 class HomePhoneViewState extends ConsumerState<HomePhoneView> {
   @override
   Widget build(BuildContext context) {
-    final stateAccount = ref.watch(loadFirstAccountByUserIdNotifierProvider);
-    final stateAccountRefresh =
-        ref.watch(loadAccountByUserIdAndAccountIdNotifierProvider);
     return Scaffold(
-      appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: stateAccount.maybeWhen(
-            orElse: () => const Text('0'),
-            data: (account) => stateAccountRefresh.maybeWhen(
-              orElse: () => TextB1(text: account.description),
-              loading: () => const CircularProgressIndicator(),
-              data: (account) => Text(account.description),
-            ),
-            loading: () => const CircularProgressIndicator(),
+      drawer: const MyDrawer(),
+      body: CustomScrollView(
+        slivers: [
+          const MyAppBar(),
+          SliverList.builder(
+            itemBuilder: (context, index) {
+              return Text('asdasd');
+            },
+            itemCount: 100000,
           )
-          // Text('asdasd'),
-          ),
+        ],
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {},

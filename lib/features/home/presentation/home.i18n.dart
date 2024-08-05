@@ -4,11 +4,14 @@ import 'package:i18n_extension/i18n_extension.dart';
 /// Constante: Marca
 const kBrand = 'kBrand';
 
-/// Constante: Texto Ingresos;
+/// Constante: Texto Ingresos
 const kIncomes = 'kIncomes';
 
-/// Constante: Text Egresos;
+/// Constante: Text Egresos
 const kExpenses = 'kExpenses';
+
+/// Constante: Lista de cuentas
+const kListAccounts = 'kListAccounts';
 
 /// Cadenas de traduccion
 extension HomeStrings on String {
@@ -25,6 +28,10 @@ extension HomeStrings on String {
     kExpenses: {
       'en_us': 'Expenses',
       'es_es': 'Egresos',
+    },
+    kListAccounts: {
+      'en_us': 'List accounts',
+      'es_es': 'Lista de cuentas',
     },
   });
 
