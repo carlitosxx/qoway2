@@ -9,5 +9,7 @@ typedef FailureOrListAccounts
 abstract class IHomeRepository {
   FailureOrAccount loadFirstAccountByUserId(int userId);
   FailureOrAccount loadAccountByUserIdAndAccountId(int userId, int accountId);
+  FailureOrAccount createAccount(String description, int userId);
+  FailureOrAccount editAccount(Account account, int userId);
   FailureOrListAccounts loadListAccountsByUserId(int userId);
 }

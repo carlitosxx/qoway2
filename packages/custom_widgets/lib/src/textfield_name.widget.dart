@@ -9,6 +9,8 @@ class TextfieldName extends StatelessWidget {
     required this.hint,
     required this.controller,
     this.onChanged,
+    this.icon,
+    this.focus,
     super.key,
   });
 
@@ -20,11 +22,18 @@ class TextfieldName extends StatelessWidget {
 
   /// Funcion para ingresar logica al detectar un cambio en el textfield
   final void Function(String)? onChanged;
+
+  /// Icono
+  final IconData? icon;
+
+  /// Focus
+  final FocusNode? focus;
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         TextField(
+          focusNode: focus,
           onChanged: onChanged,
           controller: controller,
           maxLength: 35,
@@ -64,7 +73,7 @@ class TextfieldName extends StatelessWidget {
           left: 16,
           top: 12,
           child: Icon(
-            Icons.person,
+            icon ?? Icons.person,
             color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
           ),
         ),

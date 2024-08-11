@@ -13,6 +13,24 @@ const kExpenses = 'kExpenses';
 /// Constante: Lista de cuentas
 const kListAccounts = 'kListAccounts';
 
+/// Constante: Cuentas
+const kAccounts = 'kAccounts';
+
+/// Constante: Cerrar sesion
+const kLogout = 'kLogout';
+
+/// Constante: Crear cuenta
+const kCreateAccount = 'kCreateAccount';
+
+/// Constante: Ingrese una descripcion
+const kHintEnterYourDescription = 'kHintEnterYourDescription';
+
+/// Constante: Cerrar
+const kClose = 'kClose';
+
+/// Constante: Editar descripcion
+const kEditDescription = 'kEditDescription';
+
 /// Cadenas de traduccion
 extension HomeStrings on String {
   static final _t = Translations.byId('en_us', {
@@ -33,6 +51,30 @@ extension HomeStrings on String {
       'en_us': 'List accounts',
       'es_es': 'Lista de cuentas',
     },
+    kAccounts: {
+      'en_us': 'Accounts',
+      'es_es': 'Cuentas',
+    },
+    kLogout: {
+      'en_us': 'Logout',
+      'es_es': 'Cerrar sesión',
+    },
+    kCreateAccount: {
+      'en_us': 'Create account',
+      'es_es': 'Crear cuenta',
+    },
+    kHintEnterYourDescription: {
+      'en_us': 'Enter a description',
+      'es_es': 'Ingrese una descripcion',
+    },
+    kClose: {
+      'en_us': 'Close',
+      'es_es': 'Cerrar',
+    },
+    kEditDescription: {
+      'en_us': 'Edit description',
+      'es_es': 'Editar descripcion',
+    }
   });
 
   /// Getter to translate the string

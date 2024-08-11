@@ -1,8 +1,8 @@
-import 'package:custom_widgets/custom_widgets.dart';
+// import 'package:custom_widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:prinstom/features/home/presentation/providers/injects_container.provider.dart';
+// import 'package:prinstom/features/home/presentation/providers/injects_container.provider.dart';
 import 'package:prinstom/features/home/presentation/widgets/my_appbar.widget.dart';
 
 import '../../widgets/my_drawer.widget.dart';
@@ -25,7 +25,7 @@ class HomePhoneViewState extends ConsumerState<HomePhoneView> {
           const MyAppBar(),
           SliverList.builder(
             itemBuilder: (context, index) {
-              return Text('asdasd');
+              return Text('prueba');
             },
             itemCount: 100000,
           )

@@ -1,5 +1,6 @@
 import 'package:isar/isar.dart';
 import 'package:prinstom/features/auth/data/models/user.model.dart';
+import 'package:prinstom/features/auth/domain/entities/account.entity.dart';
 import 'package:prinstom/utils/either.util.dart';
 import 'package:prinstom/utils/errors/http_request.error.dart';
 
@@ -12,6 +13,12 @@ abstract class IDataBaseIsarDataSource {
     required int userId,
     required int accountId,
   });
+  FailureOrAccount createAccount({
+    required String description,
+    required int userId,
+  });
+
+  FailureOrAccount editAccount({required Account account, required int userId});
   FailureOrListAccounts loadListAccountsByUserId({
     required int userId,
   });
@@ -78,5 +85,96 @@ class DataBaseIsarDataSourceImpl implements IDataBaseIsarDataSource {
     } on Exception catch (_) {
       return Either.left(HttpRequestFailure.local());
     }
+  }
+
+  @override
+  FailureOrAccount createAccount({
+    required String description,
+    required int userId,
+  }) async {
+    try {
+      final isar = await IsarSingleton.instance;
+      final userModel = await isar.userModels.get(userId);
+      if (userModel != null) {
+        final lastAccountId = await getLastAccountId(isar, userId);
+        final newAccountModel = AccountModel()
+          ..id = lastAccountId + 1
+          ..description = description.trim()
+          ..incomes = []
+          ..expenses = [];
+
+        final updatedAccounts =
+            List<AccountModel>.from(userModel.accounts ?? []);
+        updatedAccounts.add(newAccountModel);
+        userModel.accounts = updatedAccounts;
+
+        await isar.writeTxn(
+          () async {
+            await isar.userModels.put(userModel);
+          },
+        );
+        final newAccountEntity =
+            UserModel.fromAccountModelToAccount(newAccountModel);
+        return Either.right(newAccountEntity);
+      } else {
+        return Either.left(HttpRequestFailure.notFound());
+      }
+    } on Exception catch (_) {
+      return Either.left(HttpRequestFailure.local());
+    }
+  }
+
+  @override
+  FailureOrAccount editAccount(
+      {required Account account, required int userId}) async {
+    try {
+      final isar = await IsarSingleton.instance;
+      final userModel = await isar.userModels.get(userId);
+      if (userModel != null) {
+        final accountIndex =
+            userModel.accounts?.indexWhere((acc) => acc.id == account.id);
+        if (accountIndex != null && accountIndex != -1) {
+          // Actualizar la cuenta con los nuevos valores
+          final updatedAccounts =
+              List<AccountModel>.from(userModel.accounts ?? []);
+
+          updatedAccounts[accountIndex] = updatedAccounts[accountIndex]
+            ..description = account.description;
+
+          userModel.accounts = updatedAccounts;
+
+          // Guardar el usuario actualizado en la base de datos
+          await isar.writeTxn(
+            () async {
+              await isar.userModels.put(userModel);
+            },
+          );
+
+          // Retornar la cuenta actualizada
+          return Either.right(account);
+        } else {
+          return Either.left(HttpRequestFailure.notFound());
+        }
+      } else {
+        return Either.left(HttpRequestFailure.notFound());
+      }
+    } catch (e) {
+      return Either.left(HttpRequestFailure.local());
+    }
+    // throw UnimplementedError();
+  }
+}
+
+Future<int> getLastAccountId(Isar isar, int userId) async {
+  final userModel = await isar.userModels.get(userId);
+  if (userModel != null &&
+      userModel.accounts != null &&
+      userModel.accounts!.isNotEmpty) {
+    final lastAccountId = userModel.accounts!
+        .map((account) => account.id)
+        .reduce((a, b) => a > b ? a : b);
+    return lastAccountId;
+  } else {
+    return 0;
   }
 }
