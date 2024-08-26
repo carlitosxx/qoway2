@@ -9,6 +9,7 @@ import '../../features/auth/presentation/auth.page.dart';
 import '../../features/auth/presentation/views/phone/list_currency.view.dart';
 import '../../features/auth/presentation/views/phone/signup.view.dart';
 import '../../features/home/presentation/home.page.dart';
+import '../../features/home/presentation/views/phone/add_transaction.view.dart';
 import '../../features/home/presentation/views/phone/create_account.view.dart';
 import '../../features/home/presentation/views/phone/list_accounts.view.dart';
 
@@ -155,6 +156,28 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             ),
           );
         },
+      ),
+      GoRoute(
+        path: '/add_transaction',
+        name: 'add_transaction',
+        pageBuilder: (context, state) => CustomTransitionPage(
+          reverseTransitionDuration: const Duration(milliseconds: 400),
+          transitionDuration: const Duration(milliseconds: 400),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = Offset(0, 1);
+            const end = Offset.zero;
+            const curve = Curves.easeInOut;
+            final tween =
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            return SlideTransition(
+              position: animation.drive(tween),
+              child: child,
+            );
+          },
+          child: I18n(
+            child: const AddTransactionPhoneView(),
+          ),
+        ),
       ),
 
       // GoRoute(

@@ -5,6 +5,7 @@ import 'package:prinstom/utils/either.util.dart';
 import 'package:prinstom/utils/errors/http_request.error.dart';
 
 import '../../../../config/isar/isar_singleton.dart';
+import '../../../auth/domain/entities/transaction.entity.dart';
 import '../../domain/repositories/home.repository.dart';
 
 abstract class IDataBaseIsarDataSource {
@@ -17,10 +18,26 @@ abstract class IDataBaseIsarDataSource {
     required String description,
     required int userId,
   });
-
-  FailureOrAccount editAccount({required Account account, required int userId});
+  FailureOrTransaction createTrasaction({
+    required int userId,
+    required int accountId,
+    required Transaction transaction,
+    required bool isIncome,
+  });
+  FailureOrAccount editAccount({
+    required Account account,
+    required int userId,
+  });
   FailureOrListAccounts loadListAccountsByUserId({
     required int userId,
+  });
+  FailureOrListTransactions loadListIncomes({
+    required int userId,
+    required int accountId,
+  });
+  FailureOrListTransactions loadListExpenses({
+    required int userId,
+    required int accountId,
   });
 }
 
@@ -153,6 +170,7 @@ class DataBaseIsarDataSourceImpl implements IDataBaseIsarDataSource {
           // Retornar la cuenta actualizada
           return Either.right(account);
         } else {
+          /// No existe un model de usuario
           return Either.left(HttpRequestFailure.notFound());
         }
       } else {
@@ -161,8 +179,142 @@ class DataBaseIsarDataSourceImpl implements IDataBaseIsarDataSource {
     } catch (e) {
       return Either.left(HttpRequestFailure.local());
     }
-    // throw UnimplementedError();
   }
+
+  @override
+  FailureOrTransaction createTrasaction({
+    required int userId,
+    required int accountId,
+    required Transaction transaction,
+    required bool isIncome,
+  }) async {
+    try {
+      final isar = await IsarSingleton.instance;
+      final userModel = await isar.userModels.get(userId);
+
+      if (userModel != null) {
+        final accountIndex =
+            userModel.accounts?.indexWhere((acc) => acc.id == accountId);
+        // valida si existe la cuenta y guarda el indice
+        if (accountIndex != null && accountIndex != -1) {
+          // final accountModel = userModel.accounts![accountIndex];
+          final transactionModel =
+              UserModel.fromTransactionToTransactionModel(transaction);
+          // Agregar la transacción a la lista correspondiente
+          if (isIncome) {
+            transactionModel.id = getLastTransactionId(
+              userModel,
+              transactionModel,
+              accountIndex,
+              isIncome,
+            );
+            final listTransactionModel = List<TransactionModel>.from(
+                userModel.accounts![accountIndex].incomes);
+            listTransactionModel.add(transactionModel);
+            userModel.accounts![accountIndex].incomes = listTransactionModel;
+          } else {
+            transactionModel.id = getLastTransactionId(
+              userModel,
+              transactionModel,
+              accountIndex,
+              isIncome,
+            );
+            final listTransactionModel = List<TransactionModel>.from(
+                userModel.accounts![accountIndex].expenses);
+            listTransactionModel.add(transactionModel);
+            userModel.accounts![accountIndex].expenses = listTransactionModel;
+          }
+          // Actualizar la cuenta en el usuario
+          // userModel.accounts![accountIndex] = accountModel;
+          // Guardar los cambios en la base de datos
+          await isar.writeTxn(
+            () async {
+              await isar.userModels.put(userModel);
+            },
+          );
+
+          return Either.right(transaction);
+        } else {
+          /// No existe un model de cuenta del usuario
+          return Either.left(HttpRequestFailure.notFound());
+        }
+      } else {
+        /// No existe un model de usuario
+        return Either.left(HttpRequestFailure.notFound());
+      }
+    } catch (e) {
+      return Either.left(HttpRequestFailure.local());
+    }
+  }
+
+  @override
+  FailureOrListTransactions loadListIncomes(
+      {required int userId, required int accountId}) async {
+    try {
+      final isar = await IsarSingleton.instance;
+      final users = isar.userModels;
+      final userFound = await users.filter().idEqualTo(userId).findFirst();
+      if (userFound != null && userFound.accounts != null) {
+        final accountFound = userFound.accounts!
+            .firstWhere((account) => account.id == accountId);
+        final listIncomesModel = accountFound.incomes;
+        final listIncomes = listIncomesModel
+            .map(
+              (e) => UserModel.fromTransactionModelToTransaction(e),
+            )
+            .toList();
+        return Either.right(listIncomes);
+      }
+      return Either.left(HttpRequestFailure.notFound());
+    } catch (e) {
+      return Either.left(HttpRequestFailure.local());
+    }
+  }
+
+  @override
+  FailureOrListTransactions loadListExpenses(
+      {required int userId, required int accountId}) async {
+    try {
+      final isar = await IsarSingleton.instance;
+      final users = isar.userModels;
+      final userFound = await users.filter().idEqualTo(userId).findFirst();
+      if (userFound != null && userFound.accounts != null) {
+        final accountFound = userFound.accounts!
+            .firstWhere((account) => account.id == accountId);
+        final listExpensesModel = accountFound.expenses;
+        final listExpenses = listExpensesModel
+            .map(
+              (e) => UserModel.fromTransactionModelToTransaction(e),
+            )
+            .toList();
+        return Either.right(listExpenses);
+      }
+      return Either.left(HttpRequestFailure.notFound());
+    } catch (e) {
+      return Either.left(HttpRequestFailure.local());
+    }
+  }
+}
+
+int getLastTransactionId(UserModel userModel, TransactionModel transactionModel,
+    int accountIndex, bool isIncome) {
+  if (isIncome) {
+    if (userModel.accounts![accountIndex].incomes.isNotEmpty) {
+      final lastTransactionIdIncome = userModel.accounts![accountIndex].incomes
+          .map((transaction) => transaction.id)
+          .reduce((a, b) => a > b ? a : b);
+      return lastTransactionIdIncome + 1;
+    }
+  } else {
+    if (userModel.accounts![accountIndex].expenses.isNotEmpty) {
+      final lastTransactionIdExpenses = userModel
+          .accounts![accountIndex].expenses
+          .map((transaction) => transaction.id)
+          .reduce((a, b) => a > b ? a : b);
+      return lastTransactionIdExpenses + 1;
+    }
+  }
+  return 0;
 }
 
 Future<int> getLastAccountId(Isar isar, int userId) async {

@@ -1,6 +1,7 @@
 import 'package:custom_widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../../config/router/list_routes.dart';
 import '../../../auth/presentation/providers/user_active.provider.dart';
@@ -35,15 +36,8 @@ class MyDrawerState extends ConsumerState<MyDrawer> {
             child: Column(
               children: [
                 CircleAvatar(
-                  radius: 48,
-                  backgroundColor:
-                      Theme.of(context).colorScheme.onPrimaryContainer,
-                  child: const CircleAvatar(
-                    // backgroundImage: AssetImage('assets/images/avatar.jpg'),
-                    backgroundColor: Colors.red,
-                    radius: 46,
-                  ),
-                ),
+                    radius: 48,
+                    child: SvgPicture.asset('assets/icons/logotipo.svg')),
                 const VerticalSpacerSmall(),
                 const TextH4(text: 'Pringstom'),
               ],

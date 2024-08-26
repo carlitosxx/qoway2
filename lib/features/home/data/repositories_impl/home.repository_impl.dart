@@ -1,5 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:prinstom/features/auth/domain/entities/account.entity.dart';
+import 'package:prinstom/features/auth/domain/entities/transaction.entity.dart';
 
 import '../../../../utils/either.util.dart';
 import '../../../../utils/errors/http_request.error.dart';
@@ -80,6 +81,57 @@ class HomeRepositoryImpl implements IHomeRepository {
       return dataBaseIsarDataSourceImpl.editAccount(
         account: account,
         userId: userId,
+      );
+    } else {
+      return Either.left(
+        HttpRequestFailure.network(),
+      );
+    }
+  }
+
+  @override
+  FailureOrTransaction createTransaction(
+      int userId, int accountId, Transaction transaction, bool isIncome) async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult.contains(ConnectivityResult.mobile) ||
+        connectivityResult.contains(ConnectivityResult.wifi)) {
+      return dataBaseIsarDataSourceImpl.createTrasaction(
+        userId: userId,
+        accountId: accountId,
+        transaction: transaction,
+        isIncome: isIncome,
+      );
+    } else {
+      return Either.left(
+        HttpRequestFailure.network(),
+      );
+    }
+  }
+
+  @override
+  FailureOrListTransactions loadListIncomes(int userId, int accountId) async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult.contains(ConnectivityResult.mobile) ||
+        connectivityResult.contains(ConnectivityResult.wifi)) {
+      return dataBaseIsarDataSourceImpl.loadListIncomes(
+        userId: userId,
+        accountId: accountId,
+      );
+    } else {
+      return Either.left(
+        HttpRequestFailure.network(),
+      );
+    }
+  }
+
+  @override
+  FailureOrListTransactions loadListExpenses(int userId, int accountId) async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult.contains(ConnectivityResult.mobile) ||
+        connectivityResult.contains(ConnectivityResult.wifi)) {
+      return dataBaseIsarDataSourceImpl.loadListExpenses(
+        userId: userId,
+        accountId: accountId,
       );
     } else {
       return Either.left(

@@ -23,11 +23,14 @@ class LoadAccountByUserIdAndAccountIdNotifier
     final result = await _loadAccountByUserIdAndAccountIdUC(
         accountId: accountId, userId: userId);
     result.when(
-      left: (error) => state =
-          LoadAccountByUserIdAndAccountIdState.error(mapFailureToString(error)),
-      right: (response) => state = LoadAccountByUserIdAndAccountIdState.data(
-        account: response,
-      ),
-    );
+        left: (error) => state = LoadAccountByUserIdAndAccountIdState.error(
+            mapFailureToString(error)),
+        right: (response) {
+          // aqui debo guardar el id del account en un provider
+          setCurrentAccountId(response.id);
+          return state = LoadAccountByUserIdAndAccountIdState.data(
+            account: response,
+          );
+        });
   }
 }

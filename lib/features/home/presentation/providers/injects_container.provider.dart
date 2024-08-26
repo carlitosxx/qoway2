@@ -1,17 +1,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../../../utils/map_failure_to_string.util.dart';
 import '../../../auth/domain/entities/account.entity.dart';
+import '../../../auth/domain/entities/transaction.entity.dart';
 import '../../data/datasources/db_isar.datasource.dart';
 import '../../data/repositories_impl/home.repository_impl.dart';
 import '../../domain/repositories/home.repository.dart';
 import '../../domain/usecases/create_account.usecase.dart';
+import '../../domain/usecases/create_transaction.usecase.dart';
 import '../../domain/usecases/edit_account.usecase.dart';
 import '../../domain/usecases/load_account_by_userid_accountid.usecase.dart';
 import '../../domain/usecases/load_first_account_by_userid.usecase.dart';
 import '../../domain/usecases/load_list_accounts_by_userid.usecase.dart';
 import 'create_account/create_account.state.dart';
+import 'create_transaction/create_transaction.state.dart';
 import 'edit_account/edit_account.state.dart';
+import 'load_account_by_userid_accountid/account_selected.provider.dart';
 import 'load_account_by_userid_accountid/load_account_by_userid_accountid.state.dart';
 import 'load_first_account_by_userid/load_first_account_by_userid.state.dart';
 import 'load_list_accounts_by_userid/load_list_accounts_by_userid.state.dart';
@@ -20,6 +23,7 @@ part 'load_account_by_userid_accountid/load_account_by_userid_accountid.notifier
 part 'load_list_accounts_by_userid/load_list_accounts_by_userid.notifier.dart';
 part 'create_account/create_account.notifier.dart';
 part 'edit_account/edit_account.notifier.dart';
+part 'create_transaction/create_transaction.notifier.dart';
 
 // * Repositories Inject
 /// Repositorio de autenticacion
@@ -61,6 +65,12 @@ final _editAccountUC = Provider<EditAccountUC>(
     return EditAccountUC(repository);
   },
 );
+final _createTransactionUC = Provider<CreateTransactionUC>(
+  (ref) {
+    final repository = ref.watch(homeRepositoryProvider);
+    return CreateTransactionUC(repository);
+  },
+);
 
 // * State Notifier Providers
 final loadAccountByUserIdAndAccountIdNotifierProvider = StateNotifierProvider<
@@ -87,6 +97,12 @@ final createAccountNotifierProvider =
     StateNotifierProvider<CreateAccountNotifier, CreateAccountState>(
   (ref) => CreateAccountNotifier(
     createAccountUC: ref.watch(_createAccountUC),
+  ),
+);
+final createTransactionNotifierProvider =
+    StateNotifierProvider<CreateTransactionNotifier, CreateTransactionState>(
+  (ref) => CreateTransactionNotifier(
+    createTransactionUC: ref.watch(_createTransactionUC),
   ),
 );
 final editAccountNotifierProvider =

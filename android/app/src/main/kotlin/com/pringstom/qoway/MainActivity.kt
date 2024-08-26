@@ -1,4 +1,4 @@
-package com.example.prinstom
+package com.pringstom.qoway
 
 import io.flutter.embedding.android.FlutterActivity
 

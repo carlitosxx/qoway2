@@ -25,11 +25,23 @@ const kCreateAccount = 'kCreateAccount';
 /// Constante: Ingrese una descripcion
 const kHintEnterYourDescription = 'kHintEnterYourDescription';
 
+/// Constante: Ingrese una cantidad
+const kHintEnterYourAmount = 'kHintEnterYourAmount';
+
 /// Constante: Cerrar
 const kClose = 'kClose';
 
 /// Constante: Editar descripcion
 const kEditDescription = 'kEditDescription';
+
+/// Constante: Agregar transaccion
+const kAddTransaction = 'kAddTransaction';
+
+/// Constante: alerta
+const kAlert = 'kAlert';
+
+/// Constate: No deje espacios vacios, todos los campos son obligatorios
+const kfieldsRequired = 'kfieldsRequired';
 
 /// Cadenas de traduccion
 extension HomeStrings on String {
@@ -67,6 +79,11 @@ extension HomeStrings on String {
       'en_us': 'Enter a description',
       'es_es': 'Ingrese una descripcion',
     },
+    kHintEnterYourAmount: {
+      'en_us': 'Enter an amount',
+      'es_es': 'Ingrese una cantidad',
+    },
+
     kClose: {
       'en_us': 'Close',
       'es_es': 'Cerrar',
@@ -74,6 +91,18 @@ extension HomeStrings on String {
     kEditDescription: {
       'en_us': 'Edit description',
       'es_es': 'Editar descripcion',
+    },
+    kAddTransaction: {
+      'en_us': 'Add transaction',
+      'es_es': 'Agregar transacción',
+    },
+    kAlert: {
+      'en_us': 'Alert',
+      'es_es': 'Alerta',
+    },
+    kfieldsRequired: {
+      'en_us': 'Do not leave any empty spaces, all fields are required.',
+      'es_es': 'No deje espacios vacios, todos los campos son obligatorios',
     }
   });
 

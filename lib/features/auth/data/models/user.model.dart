@@ -76,6 +76,16 @@ class UserModel {
         description: transactionModel.description);
   }
 
+  static TransactionModel fromTransactionToTransactionModel(
+      Transaction transaction) {
+    final transactionModel = TransactionModel();
+    transactionModel.description = transaction.description;
+    transactionModel.amount = transaction.amount;
+    transactionModel.date = transaction.date;
+
+    return transactionModel;
+  }
+
   factory UserModel.fromDomain(User user) {
     final userModel = UserModel(
       email: user.email,
@@ -85,7 +95,6 @@ class UserModel {
       descriptionCurrency: user.descriptionCurrency,
       isSimbolLeft: user.isSimbolLeft,
       simbolCurrency: user.simbolCurrency,
-      // accounts: user.accounts.map((accounts)=>Accoun)
     );
 
     // Conversión de cuentas
@@ -127,9 +136,9 @@ class AccountModel {
 
   late String description;
 
-  late List<TransactionModel> expenses;
+  late List<TransactionModel> expenses = [];
 
-  late List<TransactionModel> incomes;
+  late List<TransactionModel> incomes = [];
 }
 
 @embedded

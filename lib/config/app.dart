@@ -13,7 +13,7 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final appRouter = ref.watch(appRouterProvider);
     return MaterialApp.router(
-      title: 'poticket',
+      title: 'Qoway',
       routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

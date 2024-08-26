@@ -1,4 +1,4 @@
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:custom_widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
@@ -23,17 +23,19 @@ class MyAppBar extends ConsumerStatefulWidget {
 class MyAppBarState extends ConsumerState<MyAppBar> {
   @override
   Widget build(BuildContext context) {
-    double spaceExtraAndroid = 0;
-    if (Platform.isAndroid) {
-      spaceExtraAndroid = 15;
-    }
+    // double spaceExtraAndroid = 0;
+    // if (Platform.isAndroid) {
+    //   spaceExtraAndroid = 15;
+    // }
     return SliverPersistentHeader(
       pinned: true,
       floating: true,
       delegate: PersistentHeaderDelegate(
-        maxExtend: const Size.fromHeight(kToolbarHeight).height * 3 -
-            spaceExtraAndroid,
-        minExtend: MediaQuery.of(context).padding.top + kToolbarHeight,
+        maxExtend: MediaQuery.of(context).padding.top + kToolbarHeight * 2,
+        // const Size.fromHeight(kToolbarHeight).height * 3 -
+        //     spaceExtraAndroid,
+        minExtend: 0,
+        // MediaQuery.of(context).padding.top + kToolbarHeight,
         ref: ref,
       ),
     );
@@ -63,10 +65,10 @@ class PersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-    final newValue = maxExtend - shrinkOffset;
-    final delta = newValue / maxExtend;
-    // final teta = shrinkOffset / maxExtend;
-    final ancho = MediaQuery.of(context).size.width;
+    // final newValue = maxExtend - shrinkOffset;
+    // final delta = newValue / maxExtend;
+    // final teta = (shrinkOffset / maxExtend);
+    // final ancho = MediaQuery.of(context).size.width;
     final user = ref.watch(userActiveProvider);
     final stateAccount = ref.watch(loadFirstAccountByUserIdNotifierProvider);
     final stateAccountRefresh =
@@ -84,44 +86,47 @@ class PersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
     // var d = 0.0;
     // d = (1 - teta) * 100 + (1 - teta) * 35 + teta * 50;
     // print(delta);
-
+    // print(MediaQuery.of(context).padding.top + (kToolbarHeight / 3));
+    // print(shrinkOffset);
+    // print(maxExtend);
+    // print(minExtend);
     return SizedBox.expand(
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primaryContainer,
-          borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(delta * 30),
-            bottomLeft: Radius.circular(delta * 30),
+          borderRadius: const BorderRadius.only(
+            bottomRight: Radius.circular(25),
+            bottomLeft: Radius.circular(25),
           ),
         ),
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Positioned(
-              top: MediaQuery.of(context).padding.top + (kToolbarHeight / 3),
-              left: 0,
-              child: GestureDetector(
-                onTap: () {
-                  Scaffold.of(context).openDrawer();
-                },
-                child: SizedBox(
-                  width: ancho * 0.15,
-                  child: FractionallySizedBox(
-                    widthFactor: 1,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: SizedBox(
-                            height: minExtend,
-                            child: const Icon(Icons.menu),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // Positioned(
+            //   top: MediaQuery.of(context).padding.top + (kToolbarHeight / 3),
+            //   left: 0,
+            //   child: GestureDetector(
+            //     onTap: () {
+            //       Scaffold.of(context).openDrawer();
+            //     },
+            //     child: SizedBox(
+            //       width: ancho * 0.15,
+            //       child: FractionallySizedBox(
+            //         widthFactor: 1,
+            //         child: Row(
+            //           children: [
+            //             Expanded(
+            //               child: SizedBox(
+            //                 height: minExtend,
+            //                 child: const Icon(Icons.menu),
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             Positioned(
               top: MediaQuery.of(context).padding.top + 5,
               left: 4,
@@ -141,9 +146,9 @@ class PersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
                 color: Colors.black.withOpacity(0.2),
               ),
             ),
-            // Texto Principal
+            // Texto de Cuenta e icono
             Positioned(
-              top: MediaQuery.of(context).padding.top + (kToolbarHeight / 3),
+              top: MediaQuery.of(context).padding.top + (kToolbarHeight / 3.5),
               child: GestureDetector(
                 onTap: () {},
                 child: stateAccount.maybeWhen(
@@ -165,7 +170,21 @@ class PersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
                       ),
                     ),
                     loading: () => const CircularProgressIndicator(),
-                    data: (account) => TextH4(text: account.description),
+                    data: (account) => GestureDetector(
+                      onTap: () {
+                        ref
+                            .read(loadListAccountsByUserIdNotifierProvider
+                                .notifier)
+                            .loadListAccountsByUserId(user!.id!);
+                        ref.read(appRouterProvider).pushNamed('list_accounts');
+                      },
+                      child: Row(
+                        children: [
+                          TextH4(text: account.description),
+                          const Icon(Icons.arrow_drop_down)
+                        ],
+                      ),
+                    ),
                   ),
                   loading: () => const CircularProgressIndicator(),
                 ),

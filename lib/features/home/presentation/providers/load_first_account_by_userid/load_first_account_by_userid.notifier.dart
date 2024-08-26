@@ -19,11 +19,13 @@ class LoadFirstAccountByUserIdNotifier
     state = const LoadFirstAccountByUserIdState.loading();
     final result = await _loadFirstAccountByUserIdUC(userId: userId);
     result.when(
-      left: (error) => state =
-          LoadFirstAccountByUserIdState.error(mapFailureToString(error)),
-      right: (response) => state = LoadFirstAccountByUserIdState.data(
-        account: response,
-      ),
-    );
+        left: (error) => state =
+            LoadFirstAccountByUserIdState.error(mapFailureToString(error)),
+        right: (response) {
+          setCurrentAccountId(response.id);
+          return state = LoadFirstAccountByUserIdState.data(
+            account: response,
+          );
+        });
   }
 }
