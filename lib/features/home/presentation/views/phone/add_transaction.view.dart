@@ -52,7 +52,11 @@ class AddTransactionPhoneViewState
             ref
                 .read(loadListAccountsByUserIdNotifierProvider.notifier)
                 .loadListAccountsByUserId(user!.id!);
+
             // REFRESCAR LAS TRANSACCIONES
+            ref
+                .read(loadAccountByUserIdAndAccountIdNotifierProvider.notifier)
+                .loadAccountByUserIdAndAccountId(user.id!, accountId!);
             ref.read(appRouterProvider).pop();
           },
         );

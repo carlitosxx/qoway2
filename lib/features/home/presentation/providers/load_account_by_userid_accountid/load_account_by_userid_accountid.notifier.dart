@@ -27,7 +27,7 @@ class LoadAccountByUserIdAndAccountIdNotifier
             mapFailureToString(error)),
         right: (response) {
           // aqui debo guardar el id del account en un provider
-          setCurrentAccountId(response.id);
+          setCurrentAccountId(response.id, userId);
           return state = LoadAccountByUserIdAndAccountIdState.data(
             account: response,
           );

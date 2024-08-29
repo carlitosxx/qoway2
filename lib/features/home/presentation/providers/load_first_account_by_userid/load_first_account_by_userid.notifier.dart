@@ -22,7 +22,7 @@ class LoadFirstAccountByUserIdNotifier
         left: (error) => state =
             LoadFirstAccountByUserIdState.error(mapFailureToString(error)),
         right: (response) {
-          setCurrentAccountId(response.id);
+          setCurrentAccountId(response.id, userId);
           return state = LoadFirstAccountByUserIdState.data(
             account: response,
           );

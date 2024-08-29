@@ -29,11 +29,18 @@ class ListAccountsPhoneView extends ConsumerWidget {
                 children: [
                   ListTile(
                     onTap: () {
+                      // print(account[0].incomes[0]);
                       ref
                           .read(loadAccountByUserIdAndAccountIdNotifierProvider
                               .notifier)
                           .loadAccountByUserIdAndAccountId(
                               user!.id!, account[index].id);
+                      // ref
+                      //     .read(loadListIncomesNotifierProvider.notifier)
+                      //     .loadListIncomes(user.id!, account[index].id);
+                      // ref
+                      //     .read(loadListExpensesNotifierProvider.notifier)
+                      //     .loadListExpenses(user.id!, account[index].id);
                       ref.read(appRouterProvider).pop();
                     },
                     title: TextB1(
