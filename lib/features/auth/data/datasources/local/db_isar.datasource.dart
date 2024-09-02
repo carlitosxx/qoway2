@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+import 'package:prinstom/features/auth/data/models/sesion.model.dart';
 import 'package:prinstom/features/auth/data/models/user.model.dart';
 import 'package:prinstom/features/auth/domain/entities/account.entity.dart';
 
@@ -18,6 +19,7 @@ abstract class IDataBaseIsarDataSource {
   FailureOrSignup signup({
     required User user,
   });
+  void saveSesion({required User user});
 }
 
 class DataBaseIsarDataSourceImpl implements IDataBaseIsarDataSource {
@@ -56,6 +58,16 @@ class DataBaseIsarDataSourceImpl implements IDataBaseIsarDataSource {
     } on Exception catch (_) {
       return Either.left(HttpRequestFailure.local());
     }
+  }
+
+  @override
+  void saveSesion({required User user}) async {
+    final isar = await IsarSingleton.instance;
+    final sesionModel = SesionModel(email: user.email, password: user.password);
+    await isar.writeTxn(() async {
+      await isar.sesionModels.delete(0);
+      await isar.sesionModels.put(sesionModel);
+    });
   }
 }
 

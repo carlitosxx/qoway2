@@ -14,10 +14,14 @@ class AuthRepositoryImpl implements IAuthRepository {
     final connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult.contains(ConnectivityResult.mobile) ||
         connectivityResult.contains(ConnectivityResult.wifi)) {
-      return dataBaseIsarDataSourceImpl.signinEmailPassword(
+      final resultSign = dataBaseIsarDataSourceImpl.signinEmailPassword(
         email: email,
         password: password,
       );
+      final resultFuture = await resultSign;
+      resultFuture.whenOrNull(
+          right: (value) => dataBaseIsarDataSourceImpl.saveSesion(user: value));
+      return resultSign;
     } else {
       return Either.left(
         HttpRequestFailure.network(),
