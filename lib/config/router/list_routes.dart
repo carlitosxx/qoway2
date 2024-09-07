@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:i18n_extension/i18n_extension.dart';
+import 'package:prinstom/features/auth/presentation/views/phone/signin.view.dart';
 import 'package:prinstom/features/home/presentation/views/phone/edit_account.view.dart';
 
 import '../../features/auth/domain/entities/account.entity.dart';
@@ -20,6 +21,28 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: '/',
         name: 'root',
         builder: (context, state) => I18n(child: const AuthPage()),
+      ),
+      GoRoute(
+        path: '/signin',
+        name: 'signin',
+        pageBuilder: (context, state) => CustomTransitionPage(
+          reverseTransitionDuration: const Duration(milliseconds: 400),
+          transitionDuration: const Duration(milliseconds: 400),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = Offset(1, 0);
+            const end = Offset.zero;
+            const curve = Curves.easeInOut;
+            final tween =
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            return SlideTransition(
+              position: animation.drive(tween),
+              child: child,
+            );
+          },
+          child: I18n(
+            child: const SignInPhoneView(),
+          ),
+        ),
       ),
       GoRoute(
         path: '/signup',

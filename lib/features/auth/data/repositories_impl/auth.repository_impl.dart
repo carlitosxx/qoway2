@@ -41,4 +41,17 @@ class AuthRepositoryImpl implements IAuthRepository {
       );
     }
   }
+
+  @override
+  FailureOrUser loadSession() async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult.contains(ConnectivityResult.mobile) ||
+        connectivityResult.contains(ConnectivityResult.wifi)) {
+      return dataBaseIsarDataSourceImpl.loadSession();
+    } else {
+      return Either.left(
+        HttpRequestFailure.network(),
+      );
+    }
+  }
 }

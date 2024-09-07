@@ -5,12 +5,15 @@ import '../../data/datasources/local/db_isar.datasource.dart';
 import '../../data/repositories_impl/auth.repository_impl.dart';
 import '../../domain/entities/user.entity.dart';
 import '../../domain/repositories/auth.repository.dart';
+import '../../domain/usecases/load_session.usecase.dart';
 import '../../domain/usecases/signin_email_password.usecase.dart';
 import '../../domain/usecases/signup.usecase.dart';
+import 'load_session/load_session.state.dart';
 import 'signin_email_password/signin_email_password.state.dart';
 import 'signup_email_password/signup_email_password.state.dart';
 part 'signin_email_password/signin_email_password.notifier.dart';
 part 'signup_email_password/signup_email_password.notifier.dart';
+part 'load_session/load_session.notifier.dart';
 
 // * Repositories Inject
 /// Repositorio de autenticacion
@@ -32,6 +35,12 @@ final _signupEmailPasswordUC = Provider<SignupEmailPasswordUC>(
     return SignupEmailPasswordUC(repository);
   },
 );
+final _loadSessionUC = Provider<LoadSessionUC>(
+  (ref) {
+    final repository = ref.watch(authRepositoryProvider);
+    return LoadSessionUC(repository);
+  },
+);
 // * State Notifier Providers
 final signinEmailPasswordNotifierProvider = StateNotifierProvider<
     SigninEmailPasswordNotifier, SigninEmailPasswordState>(
@@ -44,4 +53,10 @@ final signupEmailPasswordNotifierProvider = StateNotifierProvider<
   (ref) => SignupEmailPasswordNotifier(
     signupEmailPasswordUC: ref.watch(_signupEmailPasswordUC),
   ),
+);
+final loadSessionNotifierProvider =
+    StateNotifierProvider<LoadSessionNotifier, LoadSessionState>(
+  (ref) => LoadSessionNotifier(
+    loadSessionUC: ref.watch(_loadSessionUC),
+  )..loadSession(),
 );

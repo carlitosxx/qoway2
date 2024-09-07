@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'views/phone/signin.view.dart';
+import 'package:prinstom/features/auth/presentation/views/phone/splash.view.dart';
+// import 'views/phone/signin.view.dart';
 
 /// Pagina de autenticacion
 class AuthPage extends ConsumerWidget {
@@ -8,6 +9,6 @@ class AuthPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const SignInPhoneView();
+    return const SplashPhoneView();
   }
 }

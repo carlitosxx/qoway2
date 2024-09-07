@@ -20,6 +20,7 @@ abstract class IDataBaseIsarDataSource {
     required User user,
   });
   void saveSesion({required User user});
+  FailureOrUser loadSession();
 }
 
 class DataBaseIsarDataSourceImpl implements IDataBaseIsarDataSource {
@@ -62,12 +63,36 @@ class DataBaseIsarDataSourceImpl implements IDataBaseIsarDataSource {
 
   @override
   void saveSesion({required User user}) async {
-    final isar = await IsarSingleton.instance;
-    final sesionModel = SesionModel(email: user.email, password: user.password);
-    await isar.writeTxn(() async {
-      await isar.sesionModels.delete(0);
-      await isar.sesionModels.put(sesionModel);
-    });
+    try {
+      final isar = await IsarSingleton.instance;
+      final sesionModel =
+          SesionModel(email: user.email, password: user.password);
+      await isar.writeTxn(() async {
+        await isar.sesionModels.delete(0);
+        await isar.sesionModels.put(sesionModel);
+      });
+    } on Exception catch (_) {
+      return;
+    }
+  }
+
+  @override
+  FailureOrUser loadSession() async {
+    try {
+      final isar = await IsarSingleton.instance;
+      final collectionSessionModel = isar.sesionModels;
+      final sessionModel =
+          await collectionSessionModel.filter().idEqualTo(0).findFirst();
+      if (sessionModel != null) {
+        return signinEmailPassword(
+          email: sessionModel.email,
+          password: sessionModel.password,
+        );
+      }
+      return Either.left(HttpRequestFailure.notFound());
+    } catch (e) {
+      return Either.left(HttpRequestFailure.local());
+    }
   }
 }
 
